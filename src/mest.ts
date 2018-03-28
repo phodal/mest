@@ -1,9 +1,16 @@
 const fs = require('fs')
 const Papa = require('papaparse')
+const rp = require('request-promise')
+
 import { resolve } from 'path'
 import * as TJS from 'typescript-json-schema'
-
 import { IMestOption } from './model/IMestOption'
+
+const colors = require('colors')
+
+const isEqual = require('lodash.isequal')
+const intersectionWith = require('lodash.intersectionwith')
+const differenceWith = require('lodash.differencewith')
 
 const settings: TJS.PartialArgs = {
   required: true
@@ -67,13 +74,26 @@ export default class Mest {
         const program = TJS.getProgramFromFiles([resolve(arg.interface)], compilerOptions, basePath)
         const schema = TJS.generateSchema(program, typeName, settings)
 
-        if (schema && schema.properties) {
-          let interfaceKeys = Object.keys(schema.properties)
-          console.log(interfaceKeys)
-        } else {
-          throw new Error(`type ${schema} error`)
-        }
-        setImmediate(cb, null, arg)
+        rp(arg.url)
+          .then(function(response: string) {
+            let res = JSON.parse(response)
+            if (schema && schema.properties) {
+              let resKeys = Object.keys(res)
+              let interfaceKeys = Object.keys(schema.properties)
+              const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
+              const dif = differenceWith(interfaceKeys, resKeys, isEqual)
+              console.log(`same key: ${colors.green(presents.toString())}`)
+              console.log(`api lost key: ${colors.red(dif.toString())}`)
+            } else {
+              throw new Error(`type ${schema} error`)
+            }
+          })
+          .catch(function(err: any) {
+            throw new Error(`${arg.url} has error: ${err}`)
+          })
+          .finally(() => {
+            setImmediate(cb, null, arg)
+          })
       }
     }
 
