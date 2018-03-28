@@ -1,7 +1,17 @@
 const fs = require('fs')
 const Papa = require('papaparse')
+import { resolve } from 'path'
+import * as TJS from 'typescript-json-schema'
 
 import { IMestOption } from './model/IMestOption'
+
+const settings: TJS.PartialArgs = {
+  required: true
+}
+
+const compilerOptions: TJS.CompilerOptions = {
+  strictNullChecks: true
+}
 
 export default class Mest {
   private options: IMestOption
@@ -49,6 +59,20 @@ export default class Mest {
 
     function verifyContractCall(arg: any, cb: any) {
       if (arg.url !== '') {
+        let splitInterfaceUrl = arg.interface.split('/')
+        let fileName = splitInterfaceUrl[splitInterfaceUrl.length - 1]
+        let typeName = fileName.substr(0, fileName.length - '.ts'.length)
+
+        const basePath = process.cwd()
+        const program = TJS.getProgramFromFiles([resolve(arg.interface)], compilerOptions, basePath)
+        const schema = TJS.generateSchema(program, typeName, settings)
+
+        if (schema && schema.properties) {
+          let interfaceKeys = Object.keys(schema.properties)
+          console.log(interfaceKeys)
+        } else {
+          throw new Error(`type ${schema} error`)
+        }
         setImmediate(cb, null, arg)
       }
     }
