@@ -1,7 +1,7 @@
 {
   "name": "mest",
   "version": "0.0.0",
-  "description": "",
+  "description": "A Contract Test Framework for TypeScript",
   "keywords": [],
   "main": "dist/mest.umd.js",
   "module": "dist/mest.es5.js",
@@ -12,7 +12,7 @@
   "author": "Phodal HUANG <h@phodal.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/phodal/mest"
   },
   "license": "MIT",
   "engines": {
