@@ -104,5 +104,12 @@
     "typedoc": "^0.11.0",
     "typescript": "^2.6.2",
     "validate-commit-msg": "^2.12.2"
+  },
+  "dependencies": {
+    "fastparallel": "^2.3.0",
+    "json-schema-to-typescript": "^5.4.0",
+    "papaparse": "^4.3.7",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }

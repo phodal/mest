@@ -1,14 +1,25 @@
-import DummyClass from '../src/mest'
+import { default as Mest } from '../src/mest'
 
-/**
- * Dummy test
- */
-describe('Dummy test', () => {
+describe('Mest Dummy test', () => {
   it('works if true is truthy', () => {
     expect(true).toBeTruthy()
   })
 
-  it('DummyClass is instantiable', () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
+  it('Mest is instantiable', () => {
+    expect(
+      new Mest({
+        file: 'data/url.csv'
+      })
+    ).toBeInstanceOf(Mest)
+  })
+})
+
+describe('load file test', () => {
+  it('Mest is instantiable', () => {
+    let mest = new Mest({
+      file: 'data/url.csv'
+    })
+    mest.load()
+    expect(1).toBe(1)
   })
 })
