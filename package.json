@@ -109,6 +109,7 @@
   "dependencies": {
     "commander": "^2.15.1",
     "fastparallel": "^2.3.0",
+    "kind-of": "^6.0.2",
     "lodash.differencewith": "^4.5.0",
     "lodash.intersectionwith": "^4.4.0",
     "lodash.isequal": "^4.5.0",

@@ -1,6 +1,7 @@
 const fs = require('fs')
 const Papa = require('papaparse')
 const rp = require('request-promise')
+const kindOf = require('kind-of')
 
 import { resolve } from 'path'
 import * as TJS from 'typescript-json-schema'
@@ -124,7 +125,7 @@ export default class Mest {
     let resKeys = Object.keys(apiResponse)
     resKeys.map((key: any) => {
       if (apiResponse[key] && properties[key]) {
-        let typeOfApiResponse = typeof apiResponse[key]
+        let typeOfApiResponse = kindOf(apiResponse[key])
         let typeOfInterface = properties[key].type
         if (typeOfApiResponse !== typeOfInterface) {
           console.log(
