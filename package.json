@@ -1,8 +1,9 @@
 {
   "name": "mest",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A Contract Test Framework for TypeScript",
   "keywords": [],
+  "bin": "dist/lib/cli.js",
   "main": "dist/mest.umd.js",
   "module": "dist/mest.es5.js",
   "typings": "dist/types/mest.d.ts",
@@ -107,6 +108,7 @@
     "validate-commit-msg": "^2.12.2"
   },
   "dependencies": {
+    "commander": "^2.15.1",
     "fastparallel": "^2.3.0",
     "lodash.differencewith": "^4.5.0",
     "lodash.intersectionwith": "^4.4.0",
