@@ -1,5 +1,5 @@
 export interface IError {
+  id: number
   message: string
-  pbl: string
-  fdaf: string
+  documentation_url: string
 }
