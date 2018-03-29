@@ -52,6 +52,7 @@ export default class Mest {
   }
 
   verifyData(jsonData: any) {
+    const that = this
     const parallel = require('fastparallel')({
       released: completed,
       results: true
@@ -78,13 +79,7 @@ export default class Mest {
           .then(function(response: string) {
             let res = JSON.parse(response)
             if (schema && schema.properties) {
-              let resKeys = Object.keys(res)
-              let interfaceKeys = Object.keys(schema.properties)
-              const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
-              const dif = differenceWith(interfaceKeys, resKeys, isEqual)
-              console.log(`API ${arg.url}.`)
-              console.log(`same key: ${colors.green(presents.toString())}`)
-              console.log(`diff key: ${colors.red(dif.toString())}`)
+              that.compareInterface(res, schema, arg)
             } else {
               throw new Error(`type ${schema} error`)
             }
@@ -108,5 +103,15 @@ export default class Mest {
     function completed() {
       console.log('parallel completed!')
     }
+  }
+
+  private compareInterface(res: any, schema: any, arg: any) {
+    let resKeys = Object.keys(res)
+    let interfaceKeys = Object.keys(schema.properties)
+    const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
+    const dif = differenceWith(interfaceKeys, resKeys, isEqual)
+    console.log(`API ${arg.url}.`)
+    console.log(`same key: ${colors.green(presents.toString())}`)
+    console.log(`diff key: ${colors.red(dif.toString())}`)
   }
 }
