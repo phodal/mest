@@ -113,10 +113,9 @@ export default class Mest {
     const remoteDiff = differenceWith(resKeys, interfaceKeys, isEqual)
     console.log(`API ${arg.url}.`)
     console.log(`same key: ${colors.green(presents.toString())}`)
-    console.log(
-      `local diff key: ${colors.red(localDiff.toString())}, remote diff: ${colors.red(
-        remoteDiff.toString()
-      )}`
-    )
+    console.log(`
+    local diff key: ${colors.red(localDiff.toString())}, 
+      remote diff: ${colors.red(remoteDiff.toString())}
+      `)
   }
 }
