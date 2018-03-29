@@ -1,4 +1,5 @@
 import { default as Mest } from '../src/mest'
+const globalAny: any = global
 
 describe('Mest Dummy test', () => {
   it('works if true is truthy', () => {
@@ -16,10 +17,12 @@ describe('Mest Dummy test', () => {
 
 describe('load file test', () => {
   it('Mest is instantiable', () => {
+    jest.spyOn(global.console, 'log')
     let mest = new Mest({
       file: 'data/url.csv'
     })
     mest.load()
     expect(1).toBe(1)
+    // expect(console.log).toBeCalled()
   })
 })
