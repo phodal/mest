@@ -105,17 +105,35 @@ export default class Mest {
     }
   }
 
-  private compareInterface(res: any, schema: any, arg: any) {
-    let resKeys = Object.keys(res)
+  private compareInterface(apiResponse: any, schema: any, arg: any) {
+    let resKeys = Object.keys(apiResponse)
     let interfaceKeys = Object.keys(schema.properties)
     const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
     const localDiff = differenceWith(interfaceKeys, resKeys, isEqual)
     const remoteDiff = differenceWith(resKeys, interfaceKeys, isEqual)
     console.log(`API ${arg.url}.`)
     console.log(`same key: ${colors.green(presents.toString())}`)
-    console.log(`
-    local diff key: ${colors.red(localDiff.toString())}, 
-      remote diff: ${colors.red(remoteDiff.toString())}
-      `)
+    let localColor = colors.red(localDiff.toString())
+    let remoteColor = colors.red(remoteDiff.toString())
+    console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
+
+    this.diffValueType(apiResponse, schema.properties)
+  }
+
+  private diffValueType(apiResponse: any, properties: any) {
+    let resKeys = Object.keys(apiResponse)
+    resKeys.map((key: any) => {
+      if (apiResponse[key] && properties[key]) {
+        let typeOfApiResponse = typeof apiResponse[key]
+        let typeOfInterface = typeof properties[key].type
+        if (typeOfApiResponse !== typeOfInterface) {
+          console.log(
+            `difference ${colors.red(
+              key
+            )} type -> api: ${typeOfApiResponse}, interface -> ${typeOfInterface}`
+          )
+        }
+      }
+    })
   }
 }
