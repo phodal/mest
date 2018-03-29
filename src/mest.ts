@@ -82,8 +82,9 @@ export default class Mest {
               let interfaceKeys = Object.keys(schema.properties)
               const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
               const dif = differenceWith(interfaceKeys, resKeys, isEqual)
+              console.log(`API ${arg.url}.`)
               console.log(`same key: ${colors.green(presents.toString())}`)
-              console.log(`api lost key: ${colors.red(dif.toString())}`)
+              console.log(`diff key: ${colors.red(dif.toString())}`)
             } else {
               throw new Error(`type ${schema} error`)
             }

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { default as Mest } from './mest'
 
 const colors = require('colors')
