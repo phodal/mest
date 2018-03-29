@@ -112,11 +112,16 @@ export default class Mest {
     const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
     const localDiff = differenceWith(interfaceKeys, resKeys, isEqual)
     const remoteDiff = differenceWith(resKeys, interfaceKeys, isEqual)
-    console.log(`API ${arg.url}.`)
-    console.log(`same key: ${colors.green(presents.toString())}`)
-    let localColor = colors.red(localDiff.toString())
-    let remoteColor = colors.red(remoteDiff.toString())
-    console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
+
+    console.log(`-> API ${arg.url} .`)
+
+    if (localDiff.length > 0 || remoteDiff.length > 0) {
+      console.log(`same key: ${colors.green(presents.toString())}`)
+
+      let localColor = colors.red(localDiff.toString())
+      let remoteColor = colors.red(remoteDiff.toString())
+      console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
+    }
 
     this.diffValueType(apiResponse, schema.properties)
   }
