@@ -3,6 +3,29 @@
 > A Contract Test Framework for TypeScript
 
 
+Usage
+---
+
+1. install mest
+
+```
+npm install -g mest
+```
+
+2. run API compare 
+
+```
+mest -i data/url.csv
+```
+
+data example: 
+
+```csv
+url,interface
+https://phodal.github.io/mest-test/error.json,mock/IError.ts
+https://phodal.github.io/mest-test/error.json,mock/IError.ts
+```
+
 License
 ---
 
