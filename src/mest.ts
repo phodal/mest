@@ -125,7 +125,7 @@ export default class Mest {
     resKeys.map((key: any) => {
       if (apiResponse[key] && properties[key]) {
         let typeOfApiResponse = typeof apiResponse[key]
-        let typeOfInterface = typeof properties[key].type
+        let typeOfInterface = properties[key].type
         if (typeOfApiResponse !== typeOfInterface) {
           console.log(
             `difference ${colors.red(
