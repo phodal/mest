@@ -1,6 +1,6 @@
 {
   "name": "mest",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Contract Test Framework for TypeScript",
   "keywords": [],
   "bin": "dist/lib/cli.js",
@@ -76,7 +76,6 @@
   "devDependencies": {
     "@types/jest": "^22.0.0",
     "@types/node": "^9.3.0",
-    "colors": "^1.2.1",
     "commitizen": "^2.9.6",
     "coveralls": "^3.0.0",
     "cross-env": "^5.0.1",
@@ -107,6 +106,7 @@
     "validate-commit-msg": "^2.12.2"
   },
   "dependencies": {
+    "colors": "^1.2.1",
     "commander": "^2.15.1",
     "fastparallel": "^2.3.0",
     "kind-of": "^6.0.2",
