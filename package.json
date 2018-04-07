@@ -116,6 +116,6 @@
     "papaparse": "^4.3.7",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
-    "typescript-json-schema": "^0.21.0"
+    "typescript-json-schema": "^0.22.0"
   }
 }
