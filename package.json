@@ -1,6 +1,6 @@
 {
   "name": "mest",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Contract Test Framework for TypeScript",
   "keywords": [],
   "bin": "dist/lib/cli.js",
@@ -22,7 +22,8 @@
   "scripts": {
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build:all": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "tsc --module commonjs",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:watch": "jest --watch",
