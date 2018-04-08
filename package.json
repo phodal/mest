@@ -102,8 +102,11 @@
     "tslint-config-prettier": "^1.1.0",
     "tslint-config-standard": "^7.0.0",
     "typedoc": "^0.11.0",
-    "typescript": "^2.6.2",
+    "typescript": "~2.6.2",
     "validate-commit-msg": "^2.12.2"
+  },
+  "peerDependencies": {
+    "typescript": "~2.6.2"
   },
   "dependencies": {
     "colors": "^1.2.1",
