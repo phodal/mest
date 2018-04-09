@@ -61,12 +61,7 @@ export default class Mest {
 
     function verifyContractCall(arg: any, cb: any) {
       if (arg.url !== '') {
-        let splitInterfaceUrl = arg.interface.split('/')
-        let fileName = splitInterfaceUrl[splitInterfaceUrl.length - 1]
-        let typeName = fileName.substr(0, fileName.length - '.ts'.length)
-
-        const program = TJS.getProgramFromFiles([resolve(arg.interface)], compilerOptions, basePath)
-        const schema = TJS.generateSchema(program, typeName, settings)
+        const schema = that.getInterfaceScheme(arg.interface)
 
         rp(arg.url)
           .then(function(response: string) {
@@ -90,16 +85,20 @@ export default class Mest {
   }
 
   localCompareInterface(interfaceName: any, apiResponse: any) {
+    const schema = this.getInterfaceScheme(interfaceName)
+
+    if (schema && schema.properties) {
+      this.compareInterface(apiResponse, schema)
+    }
+  }
+
+  private getInterfaceScheme(interfaceName: any) {
     let splitInterfaceUrl = interfaceName.split('/')
     let fileName = splitInterfaceUrl[splitInterfaceUrl.length - 1]
     let typeName = fileName.substr(0, fileName.length - '.ts'.length)
 
     const program = TJS.getProgramFromFiles([resolve(interfaceName)], compilerOptions, basePath)
-    const schema = TJS.generateSchema(program, typeName, settings)
-
-    if (schema && schema.properties) {
-      this.compareInterface(apiResponse, schema)
-    }
+    return TJS.generateSchema(program, typeName, settings)
   }
 
   private compareInterface(apiResponse: any, schema: any) {
