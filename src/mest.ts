@@ -120,6 +120,7 @@ export default class Mest {
       this.compareInterface(apiResponse, schema)
     }
   }
+
   private compareInterface(apiResponse: any, schema: any) {
     let resKeys = Object.keys(apiResponse)
     let interfaceKeys = Object.keys(schema.properties)
