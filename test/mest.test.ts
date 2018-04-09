@@ -15,15 +15,6 @@ describe('Mest Dummy test', () => {
 })
 
 describe('load file test', () => {
-  it('correct response', () => {
-    jest.spyOn(global.console, 'log')
-    let mest = new Mest({
-      file: 'data/url.csv'
-    })
-    mest.load()
-    expect(1).toBe(1)
-  })
-
   it('error file path', () => {
     jest.spyOn(global.console, 'log')
     let mest = new Mest({
@@ -32,6 +23,25 @@ describe('load file test', () => {
     expect(() => {
       mest.load()
     }).toThrowError()
+  })
+
+  it('error file', () => {
+    jest.spyOn(global.console, 'log')
+    let mest = new Mest({
+      file: 'data/error_csv_file.txt'
+    })
+    expect(() => {
+      mest.load()
+    }).toThrowError()
+  })
+
+  it('correct response', () => {
+    jest.spyOn(global.console, 'log')
+    let mest = new Mest({
+      file: 'data/url.csv'
+    })
+    mest.load()
+    expect(1).toBe(1)
   })
 })
 

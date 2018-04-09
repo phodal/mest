@@ -32,9 +32,6 @@ export default class Mest {
 
   load() {
     let filePath = process.cwd() + '/' + this.options.file
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`Config file ${filePath} not exist`)
-    }
 
     let fileData
     try {
