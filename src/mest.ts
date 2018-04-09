@@ -26,8 +26,10 @@ const compilerOptions: TJS.CompilerOptions = {
 export default class Mest {
   private options: IMestOption
 
-  constructor(options: IMestOption) {
-    this.options = options
+  constructor(options?: IMestOption) {
+    if (options) {
+      this.options = options
+    }
   }
 
   load() {

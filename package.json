@@ -1,6 +1,6 @@
 {
   "name": "mest",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Contract Test Framework for TypeScript",
   "keywords": [],
   "bin": "dist/lib/cli.js",

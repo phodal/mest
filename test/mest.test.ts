@@ -48,9 +48,7 @@ describe('load file test', () => {
 describe('local compare test', () => {
   it('basic compare', () => {
     jest.spyOn(global.console, 'log')
-    let mest = new Mest({
-      file: 'data/url.csv'
-    })
+    let mest = new Mest()
 
     mest.localCompareInterface('mock/IUser.ts', {
       login: 'phodal',
