@@ -1,5 +1,11 @@
 export interface IDiff {
-  localDiff: string[]
-  remoteDiff: string[]
+  diff: {
+    local: string[]
+    remote: string[]
+  }
   same: string[]
+  diffType: {
+    local: string[]
+    remote: string[]
+  }
 }
