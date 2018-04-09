@@ -2,6 +2,7 @@ const fs = require('fs')
 const Papa = require('papaparse')
 const rp = require('request-promise')
 const kindOf = require('kind-of')
+const async = require('async')
 
 import { resolve } from 'path'
 import * as TJS from 'typescript-json-schema'
@@ -55,17 +56,8 @@ export default class Mest {
 
   verifyData(jsonData: any) {
     const that = this
-    const parallel = require('fastparallel')({
-      released: completed,
-      results: true
-    })
 
-    parallel(
-      {}, // what will be this in the functions
-      verifyContractCall, // functions to call
-      jsonData, // the first argument of the functions
-      done // the function to be called when the parallel ends
-    )
+    async.map(jsonData, verifyContractCall)
 
     function verifyContractCall(arg: any, cb: any) {
       if (arg.url !== '') {
@@ -94,17 +86,6 @@ export default class Mest {
             setImmediate(cb, null, arg)
           })
       }
-    }
-
-    function done(err: any, results: any) {
-      if (err) {
-        throw new Error(err)
-      }
-      console.log('parallel completed, results:', results)
-    }
-
-    function completed() {
-      console.log('parallel completed!')
     }
   }
 

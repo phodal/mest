@@ -23,7 +23,6 @@ describe('load file test', () => {
     })
     mest.load()
     expect(1).toBe(1)
-    // expect(console.log).toBeCalled()
   })
 })
 

@@ -66,10 +66,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 90,
-        "functions": 95,
-        "lines": 95,
-        "statements": 95
+        "branches": 80,
+        "functions": 59,
+        "lines": 80,
+        "statements": 75
       }
     },
     "collectCoverage": true
@@ -110,9 +110,9 @@
     "typescript": "~2.6.2"
   },
   "dependencies": {
+    "async": "^2.6.0",
     "colors": "^1.2.1",
     "commander": "^2.15.1",
-    "fastparallel": "^2.3.0",
     "kind-of": "^6.0.2",
     "lodash.differencewith": "^4.5.0",
     "lodash.intersectionwith": "^4.4.0",
