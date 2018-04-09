@@ -8,6 +8,7 @@ import * as TJS from 'typescript-json-schema'
 import { IMestOption } from './model/IMestOption'
 
 const colors = require('colors')
+const basePath = process.cwd()
 
 const isEqual = require('lodash.isequal')
 const intersectionWith = require('lodash.intersectionwith')
@@ -72,7 +73,6 @@ export default class Mest {
         let fileName = splitInterfaceUrl[splitInterfaceUrl.length - 1]
         let typeName = fileName.substr(0, fileName.length - '.ts'.length)
 
-        const basePath = process.cwd()
         const program = TJS.getProgramFromFiles([resolve(arg.interface)], compilerOptions, basePath)
         const schema = TJS.generateSchema(program, typeName, settings)
 
@@ -80,7 +80,9 @@ export default class Mest {
           .then(function(response: string) {
             let res = JSON.parse(response)
             if (schema && schema.properties) {
-              that.compareInterface(res, schema, arg)
+              console.log(`-> API ${arg.url} .`)
+
+              that.compareInterface(res, schema)
             } else {
               throw new Error(`type ${schema} error`)
             }
@@ -106,14 +108,24 @@ export default class Mest {
     }
   }
 
-  private compareInterface(apiResponse: any, schema: any, arg: any) {
+  localCompareInterface(interfaceName: any, apiResponse: any) {
+    let splitInterfaceUrl = interfaceName.split('/')
+    let fileName = splitInterfaceUrl[splitInterfaceUrl.length - 1]
+    let typeName = fileName.substr(0, fileName.length - '.ts'.length)
+
+    const program = TJS.getProgramFromFiles([resolve(interfaceName)], compilerOptions, basePath)
+    const schema = TJS.generateSchema(program, typeName, settings)
+
+    if (schema && schema.properties) {
+      this.compareInterface(apiResponse, schema)
+    }
+  }
+  private compareInterface(apiResponse: any, schema: any) {
     let resKeys = Object.keys(apiResponse)
     let interfaceKeys = Object.keys(schema.properties)
     const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
     const localDiff = differenceWith(interfaceKeys, resKeys, isEqual)
     const remoteDiff = differenceWith(resKeys, interfaceKeys, isEqual)
-
-    console.log(`-> API ${arg.url} .`)
 
     if (localDiff.length > 0 || remoteDiff.length > 0) {
       console.log(`same key: ${colors.green(presents.toString())}`)
