@@ -7,6 +7,8 @@
 [![node](https://img.shields.io/node/v/mest.svg)](https://www.npmjs.com/package/mest) 
 [![npm](https://img.shields.io/npm/v/mest.svg)](https://www.npmjs.com/mest)
 
+![Mest Screenshot](./doc/mest-screenshot.png)
+
 Usage
 ---
 
@@ -36,14 +38,12 @@ results:
 
 
 ```
--> API https://phodal.github.io/mest-test/error.json .
-same key: message,documentation_url
-local diff key: id, remote diff:
 -> API https://phodal.github.io/mest-test/moreerror.json .
-difference errors type -> api: array, interface -> string
+-> API https://phodal.github.io/mest-test/error.json .
+same key: <green>message</green>,<green>documentation_url</green>
+local diff key: <red>id</red>,<red>key<red>, remote diff:
+difference <red>message<red> type -> api: <red>string</red>, interface -> <red>number</red>
 -> API https://phodal.github.io/mest-test/user.json .
-same key: login,id,avatar_url,url,html_url,followers_url,following_url,gists_url,starred_url,subscriptions_url,organizations_url,repos_url,events_url,received_events_url,type,site_admin,name,company,blog,location,email,hireable,bio,public_repos,public_gists,followers,following,created_at,updated_at
-local diff key: avatar_id, remote diff: gravatar_id
 ```
 
 License: MIT
