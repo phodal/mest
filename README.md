@@ -2,6 +2,10 @@
 
 > A Contract Test Framework for TypeScript
 
+[![Build Status](https://travis-ci.org/phodal/mest.svg?branch=master)](https://travis-ci.org/phodal/mest)
+[![Coverage Status](https://coveralls.io/repos/github/phodal/mest/badge.svg?branch=master)](https://coveralls.io/github/phodal/mest?branch=master)
+[![node](https://img.shields.io/node/v/mest.svg)](https://www.npmjs.com/package/mest) 
+[![npm](https://img.shields.io/npm/v/mest.svg)](https://www.npmjs.com/mest)
 
 Usage
 ---
