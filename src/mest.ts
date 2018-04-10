@@ -71,7 +71,7 @@ export default class Mest {
             if (schema && schema.properties) {
               console.log(`-> API ${arg.url} .`)
 
-              that.compareInterface(res, schema)
+              that.compareInterface(res, schema, { mode: 'cli' })
             } else {
               throw new Error(`type ${schema} error`)
             }
@@ -103,7 +103,7 @@ export default class Mest {
     return TJS.generateSchema(program, typeName, settings)
   }
 
-  private compareInterface(apiResponse: any, schema: any) {
+  private compareInterface(apiResponse: any, schema: any, options?: any) {
     let diff: IDiff = {
       diff: {
         local: [],
@@ -122,19 +122,27 @@ export default class Mest {
       diff.same = presents
       diff.diff.local = localDiff
       diff.diff.remote = remoteDiff
-      console.log(`same key: ${colors.green(presents.toString())}`)
+      if (options && options.mode === 'cli') {
+        console.log(`same key: ${colors.green(presents.toString())}`)
 
-      let localColor = colors.red(localDiff.toString())
-      let remoteColor = colors.red(remoteDiff.toString())
-      console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
+        let localColor = colors.red(localDiff.toString())
+        let remoteColor = colors.red(remoteDiff.toString())
+        console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
+      }
     }
 
-    diff.diffTypes = this.diffValueType(apiResponse, schema.properties)
+    let diffOptions = null
+
+    if (options) {
+      diffOptions = options
+    }
+
+    diff.diffTypes = this.diffValueType(apiResponse, schema.properties, diffOptions)
 
     return diff
   }
 
-  private diffValueType(apiResponse: any, properties: any): IDiffType[] {
+  private diffValueType(apiResponse: any, properties: any, options?: any): IDiffType[] {
     let diffTypes: IDiffType[] = []
     let resKeys = Object.keys(apiResponse)
     for (let i = 0; i < resKeys.length; i++) {
@@ -143,11 +151,13 @@ export default class Mest {
         let typeOfApiResponse = kindOf(apiResponse[key])
         let typeOfInterface = properties[key].type
         if (typeOfApiResponse !== typeOfInterface) {
-          console.log(
-            `difference ${colors.red(
-              key
-            )} type -> api: ${typeOfApiResponse}, interface -> ${typeOfInterface}`
-          )
+          if (options && options.mode === 'cli') {
+            console.log(
+              `difference ${colors.red(
+                key
+              )} type -> api: ${typeOfApiResponse}, interface -> ${typeOfInterface}`
+            )
+          }
           diffTypes.push({
             key: key,
             local: typeOfInterface,
