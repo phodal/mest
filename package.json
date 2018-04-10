@@ -61,7 +61,7 @@
       "js"
     ],
     "moduleNameMapper": {
-      "request-promise": "<rootDir>/test/__mocks__/request.ts"
+      "request-promise": "<rootDir>/test/__mocks__/request.js"
     },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
@@ -69,10 +69,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 60,
-        "functions": 60,
-        "lines": 60,
-        "statements": 60
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
       }
     },
     "collectCoverage": true
