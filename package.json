@@ -60,6 +60,9 @@
       "tsx",
       "js"
     ],
+    "moduleNameMapper": {
+      "request-promise": "<rootDir>/test/__mocks__/request.ts"
+    },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/"

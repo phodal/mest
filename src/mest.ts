@@ -79,9 +79,6 @@ export default class Mest {
           .catch(function(err: any) {
             throw new Error(`${arg.url} has error: ${err}`)
           })
-          .finally(() => {
-            setImmediate(cb, null, arg)
-          })
       }
     }
   }
