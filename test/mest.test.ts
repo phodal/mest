@@ -63,10 +63,13 @@ describe('local compare test', () => {
         local: ['message'],
         remote: ['key', 'messages']
       },
-      diffType: {
-        local: ['string'],
-        remote: ['string']
-      },
+      diffTypes: [
+        {
+          key: 'documentation_url',
+          local: 'string',
+          remote: 'number'
+        }
+      ],
       same: ['id', 'documentation_url']
     })
   })

@@ -9,6 +9,7 @@ const async = require('async')
 import { resolve } from 'path'
 import * as TJS from 'typescript-json-schema'
 import { IMestOption } from './model/IMestOption'
+import { IDiffType } from './model/IDiffType'
 
 const colors = require('colors')
 const basePath = process.cwd()
@@ -109,10 +110,7 @@ export default class Mest {
         remote: []
       },
       same: [],
-      diffType: {
-        local: [],
-        remote: []
-      }
+      diffTypes: []
     }
     let resKeys = Object.keys(apiResponse)
     let interfaceKeys = Object.keys(schema.properties)
@@ -131,17 +129,13 @@ export default class Mest {
       console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
     }
 
-    let diffTypes = this.diffValueType(apiResponse, schema.properties)
-
-    diff.diffType.local = diffTypes.local
-    diff.diffType.remote = diffTypes.remote
+    diff.diffTypes = this.diffValueType(apiResponse, schema.properties)
 
     return diff
   }
 
-  private diffValueType(apiResponse: any, properties: any) {
-    let localType = []
-    let remoteType = []
+  private diffValueType(apiResponse: any, properties: any): IDiffType[] {
+    let diffTypes: IDiffType[] = []
     let resKeys = Object.keys(apiResponse)
     for (let i = 0; i < resKeys.length; i++) {
       let key = resKeys[i]
@@ -149,20 +143,20 @@ export default class Mest {
         let typeOfApiResponse = kindOf(apiResponse[key])
         let typeOfInterface = properties[key].type
         if (typeOfApiResponse !== typeOfInterface) {
-          localType.push(typeOfInterface)
-          remoteType.push(typeOfInterface)
           console.log(
             `difference ${colors.red(
               key
             )} type -> api: ${typeOfApiResponse}, interface -> ${typeOfInterface}`
           )
+          diffTypes.push({
+            key: key,
+            local: typeOfInterface,
+            remote: typeOfApiResponse
+          })
         }
       }
     }
 
-    return {
-      local: localType,
-      remote: remoteType
-    }
+    return diffTypes
   }
 }
