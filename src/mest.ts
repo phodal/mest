@@ -85,11 +85,11 @@ export default class Mest {
     }
   }
 
-  localCompareInterface(interfaceName: any, apiResponse: any) {
+  localCompareInterface(interfaceName: any, apiResponse: any): any {
     const schema = this.getInterfaceScheme(interfaceName)
 
     if (schema && schema.properties) {
-      this.compareInterface(apiResponse, schema)
+      return this.compareInterface(apiResponse, schema)
     }
   }
 
