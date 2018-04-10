@@ -120,7 +120,8 @@ export default class Mest {
 
   private diffValueType(apiResponse: any, properties: any) {
     let resKeys = Object.keys(apiResponse)
-    resKeys.map((key: any) => {
+    for (let i = 0; i < resKeys.length; i++) {
+      let key = resKeys[i]
       if (apiResponse[key] && properties[key]) {
         let typeOfApiResponse = kindOf(apiResponse[key])
         let typeOfInterface = properties[key].type
@@ -132,6 +133,6 @@ export default class Mest {
           )
         }
       }
-    })
+    }
   }
 }
