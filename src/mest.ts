@@ -1,3 +1,5 @@
+import { IDiff } from './model/IDiff'
+
 const fs = require('fs')
 const Papa = require('papaparse')
 const rp = require('request-promise')
@@ -101,6 +103,17 @@ export default class Mest {
   }
 
   private compareInterface(apiResponse: any, schema: any) {
+    let diff: IDiff = {
+      diff: {
+        local: [],
+        remote: []
+      },
+      same: [],
+      diffType: {
+        local: [],
+        remote: []
+      }
+    }
     let resKeys = Object.keys(apiResponse)
     let interfaceKeys = Object.keys(schema.properties)
     const presents = intersectionWith(resKeys, interfaceKeys, isEqual)
@@ -108,6 +121,9 @@ export default class Mest {
     const remoteDiff = differenceWith(resKeys, interfaceKeys, isEqual)
 
     if (localDiff.length > 0 || remoteDiff.length > 0) {
+      diff.same = presents
+      diff.diff.local = localDiff
+      diff.diff.remote = remoteDiff
       console.log(`same key: ${colors.green(presents.toString())}`)
 
       let localColor = colors.red(localDiff.toString())
@@ -115,10 +131,17 @@ export default class Mest {
       console.log(`local diff key: ${localColor}, remote diff: ${remoteColor}`)
     }
 
-    this.diffValueType(apiResponse, schema.properties)
+    let diffTypes = this.diffValueType(apiResponse, schema.properties)
+
+    diff.diffType.local = diffTypes.local
+    diff.diffType.remote = diffTypes.remote
+
+    return diff
   }
 
   private diffValueType(apiResponse: any, properties: any) {
+    let localType = []
+    let remoteType = []
     let resKeys = Object.keys(apiResponse)
     for (let i = 0; i < resKeys.length; i++) {
       let key = resKeys[i]
@@ -126,6 +149,8 @@ export default class Mest {
         let typeOfApiResponse = kindOf(apiResponse[key])
         let typeOfInterface = properties[key].type
         if (typeOfApiResponse !== typeOfInterface) {
+          localType.push(typeOfInterface)
+          remoteType.push(typeOfInterface)
           console.log(
             `difference ${colors.red(
               key
@@ -133,6 +158,11 @@ export default class Mest {
           )
         }
       }
+    }
+
+    return {
+      local: localType,
+      remote: remoteType
     }
   }
 }
